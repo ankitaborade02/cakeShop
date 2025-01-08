@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Place Order</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url(/frontend/assets/images/cupcake16.jpg);
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 100%;
+            font-family: Arial, sans-serif;
+        }
+        
+        fieldset {
+            color: rgb(6, 49, 106);
+            border: none;
+            padding: 20px;
+        }
+        
+        form {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        legend {
+            color: rgb(235, 84, 28);
+            text-align: center;
+            font-size: 24px;
+        }
+        
+        label {
+            display: block;
+            margin-top: 15px;
+            font-size: 16px;
+            color: #333;
+        }
+        
+        input,
+        textarea {
+            width: 90%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid black;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        
+        button {
+            padding: 12px;
+            background-color: rgb(111, 237, 220);
+            border: none;
+            color: black;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: background-color 0.3s ease;
+        }
+        
+        button:hover {
+            background-color: rgb(52, 138, 11);
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <form id="orderForm" autocomplete="off">
+        <fieldset>
+            <legend>Place The Order</legend>
+    
+            <label for="name">Customer Name:</label>
+            <input type="text" id="name" placeholder="Enter your name" required>
+    
+            <label for="order">Order Date:</label>
+            <input type="date" id="order" required>
+    
+            <label for="phn">Phone No:</label>
+            <input type="text" id="phn" maxlength="10" placeholder="Enter 10-digit phone number" required>
+    
+            <label for="add">Address:</label>
+            <textarea id="add" placeholder="Enter your address" required></textarea>
+    
+            <button type="submit" id="btn">Proceed To Payment</button>
+        </fieldset>
+    </form>
+
+    <script>
+        document.getElementById('orderForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Get form values
+            const name = document.getElementById('name').value.trim();
+            const orderDate = document.getElementById('order').value;
+            const phone = document.getElementById('phn').value.trim();
+            const address = document.getElementById('add').value.trim();
+
+            // Validate inputs
+            if (!name || !orderDate || !phone || !address) {
+                alert('Please fill all fields correctly!');
+                return;
+            }
+
+            if (!/^\d{10}$/.test(phone)) {
+                alert('Please enter a valid 10-digit phone number.');
+                return;
+            }
+
+            // Store data in localStorage
+            localStorage.setItem('customerName', name);
+            localStorage.setItem('orderDate', orderDate);
+            localStorage.setItem('phone', phone);
+            localStorage.setItem('address', address);
+
+            // Redirect to payment page
+            window.location.href = './payment.html';
+        });
+    </script>
+</body>
+
+</html>

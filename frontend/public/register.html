@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Cake Shop</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        body {
+            background-color: #f7f7f7;
+            font-family: 'Arial', sans-serif;
+            background-image: url(/frontend/assets/images/cupcake14.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: 0px;
+        }
+
+        .main {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 20px;
+            background-color: antiquewhite;
+            border: 2px solid rgb(247, 75, 7);
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .main h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        form label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        form input,
+        form textarea,
+        form select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        #register-btn {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        #register-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="main">
+            <h2>Create an Account</h2>
+            <form id="register-form">
+                <!-- Basic Information -->
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required />
+
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required />
+
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required />
+
+                <!-- Contact Information -->
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" required />
+
+                <!-- Submit Button -->
+                <button type="submit" id="register-btn">Register</button>
+            </form>
+            <p>Already have an account? <a href="login.html">Login here</a></p>
+        </div>
+    </div>
+
+    <script>
+        // Register form submission handling using fetch
+        document.getElementById('register-form').addEventListener('submit', async function (e) {
+            e.preventDefault();  // Prevent the default form submission behavior
+
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const phone = document.getElementById('phone').value;
+
+            // Make a POST request to the backend
+            const response = await fetch('http://localhost:5000/auth/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, email, password, phone }),
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                alert(result.message); // Show success message
+                window.location.href = 'login.html'; // Redirect to login page
+            } else {
+                alert(result.error || 'Failed to register!'); // Show error message
+            }
+        });
+    </script>
+</body>
+
+</html>
